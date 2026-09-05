@@ -92,6 +92,7 @@ const CODE_META: Record<string, { color: string; bg: string; dot: string; emoji:
   AMBIGUOUS_MULTI:       { color: "#5b21b6", bg: "#f5f3ff", dot: "#8b5cf6", emoji: "🔀" },
   UNKNOWN_EXCEPTION:     { color: "#64748b", bg: "#f8fafc", dot: "#94a3b8", emoji: "⚠️" },
   LLM_UNRESOLVED:        { color: "#9a3412", bg: "#fff8f5", dot: "#f97316", emoji: "🤖" },
+  AI_REJECTED:           { color: "#86198f", bg: "#fdf4ff", dot: "#d946ef", emoji: "🧠" },
   NO_UNCONSUMED_CANDIDATES: { color: "#64748b", bg: "#f8fafc", dot: "#94a3b8", emoji: "🗑️" },
 };
 const DEFAULT_CODE_META = { color: "#64748b", bg: "#f8fafc", dot: "#94a3b8", emoji: "⚠️" };
@@ -1005,10 +1006,10 @@ function ExceptionsPanel({ complete, excData }: { complete: boolean, excData: Ex
                   padding: "3px 9px", borderRadius: 6, fontSize: 9, fontWeight: 700,
                   background: meta.bg, border: `1px solid ${meta.dot}22`, color: meta.color,
                   fontFamily: "'JetBrains Mono',monospace", letterSpacing: "0.06em", flexShrink: 0,
-                  maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+                  maxWidth: 350
                 }}>
                   <span style={{ width: 5, height: 5, borderRadius: "50%", background: meta.dot, display: "inline-block", flexShrink: 0 }} />
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{exc.code}</span>
+                  <span style={{ wordBreak: "break-word" }}>{exc.code}</span>
                 </span>
                 <div style={{ flexShrink: 0 }}>
                   <Avatar seed={AVATAR_SEEDS[i % AVATAR_SEEDS.length]} size={26} border="#e2e8f0" index={i} />

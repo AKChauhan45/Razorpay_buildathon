@@ -318,20 +318,26 @@ async def reconcile_stream(
                 bid = bank["txn_id"]
                 if bid not in reconciler.consumed_bank_ids:
                     reason = unresolved_reasons.get(bid) or "NO_CANDIDATE"
+                    
                     if reason == "NO_CANDIDATE":
                         detail = "No matching ledger record found after all passes"
+                        reason_code = reason
                     elif reason == "AMBIGUOUS_MULTI":
                         detail = "Multiple exact matches found, requiring human review"
+                        reason_code = reason
                     elif reason == "LLM_UNRESOLVED":
                         detail = "AI reviewed but could not confidently match"
+                        reason_code = reason
                     elif reason == "FS_WEIGHT_LOW":
                         detail = "Candidate similarity too low for AI review"
+                        reason_code = reason
                     else:
-                        detail = "Failed to match after AI reasoning"
+                        detail = reason
+                        reason_code = "AI_REJECTED"
                         
                     exceptions_raw.append({
                         "bank_txn_id": bid,
-                        "reason_code": reason,
+                        "reason_code": reason_code,
                         "detail": detail,
                     })
 

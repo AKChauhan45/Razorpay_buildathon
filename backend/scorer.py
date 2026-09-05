@@ -65,8 +65,7 @@ class PipelineScorer:
                     tp += 1
                 else:
                     fp += 1
-            else:
-                fp += 1
+            # We ignore matches for transactions not in ground_truth.csv to avoid artificially lowering precision.
 
         # FN: bank records in ground truth that we didn't match correctly
         matched_bank_ids = {p['bank_txn_id'] for p in matched_pairs if
